@@ -1,5 +1,7 @@
+import 'package:bit_finance/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../widget/widget.dart';
 
@@ -166,7 +168,9 @@ class HomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(BitFinanceRoutes.addTransaction);
+        },
         elevation: 0,
         child: const Icon(Icons.add),
       ),

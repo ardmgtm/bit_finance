@@ -28,10 +28,12 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
+  currency_text_input_formatter: ^2.1.5
   flutter:
     sdk: flutter
   get: ^4.6.1
   google_fonts: ^2.3.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0

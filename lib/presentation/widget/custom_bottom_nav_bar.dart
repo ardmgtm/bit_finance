@@ -26,6 +26,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       NavBarItem(Icon(Icons.settings), 'Setting'),
     ];
 
+    int _centerVal = items.length ~/ 2;
+
     List<Widget> _itemsWidget = items
         .asMap()
         .map(
@@ -39,6 +41,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 setState(() {
                   _selectedIndex = index;
                 });
+                if (widget.onItemMenuSelected != null) {
+                  widget.onItemMenuSelected!(index);
+                }
               },
             ),
           ),
@@ -46,12 +51,22 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         .values
         .toList();
 
+    Widget _empty = Flexible(
+      flex: 1,
+      fit: FlexFit.tight,
+      child: Container(height: 0),
+    );
+
     return BottomAppBar(
       elevation: 10,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: _itemsWidget,
+        children: [
+          ..._itemsWidget.sublist(0, _centerVal),
+          _empty,
+          ..._itemsWidget.sublist(_centerVal),
+        ],
       ),
       notchMargin: 8.0,
       shape: MyShape(),
