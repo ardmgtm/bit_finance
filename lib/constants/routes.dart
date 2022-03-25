@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../presentation/home_page.dart';
+import '../presentation/page/home_page.dart';
 
 class BitFinanceRoutes {
   static const home = '/';

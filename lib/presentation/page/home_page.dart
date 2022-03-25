@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../widget/widget.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -120,8 +122,56 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Recent Transaction",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text("view all"),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              itemCount: 3,
+              separatorBuilder: (_, i) => const SizedBox(height: 16),
+              itemBuilder: (context, i) => ListTile(
+                leading: Icon(Icons.receipt),
+                title: Text(
+                  "Subscription",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text("Netflix"),
+                    Text("23 Mar, 03:00"),
+                  ],
+                ),
+                trailing: const Text("- Rp 45,000"),
+              ),
+            ),
+          )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        elevation: 0,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const CustomBottomNavBar(),
     );
   }
 }
