@@ -1,8 +1,8 @@
-import 'package:bit_finance/presentation/widget/widget.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 
-import '../../../constants/category_data.dart';
+import '../../../application/constants/category_data.dart';
+import '../../widget/widget.dart';
 
 class AddExpenseScreen extends StatelessWidget {
   const AddExpenseScreen({Key? key}) : super(key: key);

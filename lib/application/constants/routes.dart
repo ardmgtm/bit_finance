@@ -1,7 +1,7 @@
-import 'package:bit_finance/presentation/page/add_transaction_page.dart';
 import 'package:get/get.dart';
 
-import '../presentation/page/home_page.dart';
+import '../../presentation/page/add_transaction_page.dart';
+import '../../presentation/page/home_page.dart';
 
 class BitFinanceRoutes {
   static const home = '/';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../domain/entity/category/category.dart';
+import '../../domain/entity/category/category.dart';
 
 List<Category> expenseCategories = [
   Category(

@@ -1,7 +1,7 @@
-import 'package:bit_finance/constants/category_data.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 
+import '../../../application/constants/category_data.dart';
 import '../../widget/widget.dart';
 
 class AddIncomeScreen extends StatelessWidget {

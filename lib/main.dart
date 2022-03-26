@@ -1,8 +1,8 @@
-import 'package:bit_finance/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-import 'constants/routes.dart';
+import 'application/constants/routes.dart';
+import 'application/constants/styles.dart';
 
 void main() {
   runApp(const MyApp());

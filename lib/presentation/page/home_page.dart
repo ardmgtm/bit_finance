@@ -1,8 +1,8 @@
-import 'package:bit_finance/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import '../../application/constants/routes.dart';
 import '../widget/widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -124,21 +125,14 @@ class HomePage extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Recent Transaction",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("view all"),
-                ),
-              ],
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Recent Transaction",
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           Expanded(
@@ -146,7 +140,20 @@ class HomePage extends StatelessWidget {
               itemCount: 3,
               separatorBuilder: (_, i) => const SizedBox(height: 16),
               itemBuilder: (context, i) => ListTile(
-                leading: Icon(Icons.receipt),
+                leading: Container(
+                  decoration: BoxDecoration(
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Icon(
+                      Icons.receipt,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
                 title: Text(
                   "Subscription",
                   style: TextStyle(
@@ -161,7 +168,11 @@ class HomePage extends StatelessWidget {
                     Text("23 Mar, 03:00"),
                   ],
                 ),
-                trailing: const Text("- Rp 45,000"),
+                trailing: Text(
+                  "- Rp 45,000",
+                  style: TextStyle(
+                      color: Colors.red[600], fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           )
