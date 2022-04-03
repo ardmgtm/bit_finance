@@ -18,14 +18,14 @@ class LocalDb {
 
   static Future<Database> _initiateDatabase() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'bit_pos.db');
+    final path = join(dbPath, 'bit_finance.db');
 
     // await deleteDatabase(path);
     Database _db = await openDatabase(
       path,
       version: 1,
       onCreate: (db, version) async {
-        await db.execute(transactoinTableQuery);
+        await db.execute(transactionTableQuery);
       },
     );
     return _db;

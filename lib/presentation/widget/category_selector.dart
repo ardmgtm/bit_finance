@@ -24,6 +24,7 @@ class _CategorySelectorState extends State<CategorySelector> {
     _selectedCategory = widget.categoryList[0];
     if (widget.controller != null) {
       widget.controller!.category = _selectedCategory;
+      widget.controller!.index = 0;
     }
     super.initState();
   }

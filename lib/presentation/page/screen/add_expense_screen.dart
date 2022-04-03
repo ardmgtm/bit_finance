@@ -1,7 +1,12 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../application/constants/category_data.dart';
+import '../../../application/controller/add_transaction_controller.dart';
+import '../../../domain/entity/transaction/transaction.dart';
+import '../../../injection.dart';
 import '../../widget/widget.dart';
 
 class AddExpenseScreen extends StatelessWidget {
@@ -9,8 +14,11 @@ class AddExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(getIt<AddTransactionController>());
+
     TextEditingController _nominalInput = TextEditingController();
     TextEditingController _dateInput = TextEditingController();
+    TextEditingController _timeInput = TextEditingController();
     TextEditingController _descriptionInput = TextEditingController();
 
     CategorySelectController _categorySelect = CategorySelectController();
@@ -54,6 +62,16 @@ class AddExpenseScreen extends StatelessWidget {
           DateSelector(controller: _dateInput),
           const SizedBox(height: 8),
           const Text(
+            'Time',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 8),
+          TimeSelector(controller: _timeInput),
+          const SizedBox(height: 8),
+          const Text(
             'Category',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
@@ -84,8 +102,20 @@ class AddExpenseScreen extends StatelessWidget {
           const SizedBox(height: 16.00),
           ElevatedButton(
             onPressed: () async {
-              debugPrint(_categorySelect.category!.name);
-              debugPrint(_formatter.getUnformattedValue().toString());
+              var transaction = Transaction(
+                type: 0,
+                nominal: _formatter.getUnformattedValue().toDouble(),
+                dateTime: DateFormat('dd/MM/yyyy hh:mm a')
+                    .parse(_dateInput.text + " " + _timeInput.text),
+                category: _categorySelect.index ?? 0,
+                description: _descriptionInput.text,
+              );
+              debugPrint(transaction.toJson().toString());
+              await controller.createTransaction(transaction);
+              debugPrint(controller.isError.toString());
+              if (controller.isError.isFalse) {
+                Get.back();
+              }
             },
             child: const Padding(
               padding: EdgeInsets.all(16.0),

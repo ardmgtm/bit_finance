@@ -13,6 +13,8 @@ const String columnDescription = 'description';
 
 @freezed
 class Transaction with _$Transaction {
+  const Transaction._();
+
   const factory Transaction({
     @JsonKey(defaultValue: 0, name: columnId) int? id,
     @JsonKey(name: columnType) required int type,

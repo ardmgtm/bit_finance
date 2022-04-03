@@ -7,6 +7,8 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
+import 'application/controller/add_transaction_controller.dart' as _i6;
+import 'application/controller/home_controller.dart' as _i7;
 import 'domain/repository/transaction_repository.dart' as _i4;
 import 'infrastructure/local_data_source/transaction/transaction_local_data_source.dart'
     as _i3;
@@ -22,5 +24,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i3.TransactionLocalDataSource());
   gh.lazySingleton<_i4.TransactionRepository>(() =>
       _i5.TransactionRepositoryImpl(get<_i3.TransactionLocalDataSource>()));
+  gh.factory<_i6.AddTransactionController>(
+      () => _i6.AddTransactionController(get<_i4.TransactionRepository>()));
+  gh.factory<_i7.HomeController>(
+      () => _i7.HomeController(get<_i4.TransactionRepository>()));
   return get;
 }

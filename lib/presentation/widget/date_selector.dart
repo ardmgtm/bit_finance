@@ -14,8 +14,14 @@ class DateSelector extends StatefulWidget {
 }
 
 class _DateSelectorState extends State<DateSelector> {
+  String _formatDate(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
+    widget.controller.text = _formatDate(DateTime.now());
+
     return TextFormField(
       controller: widget.controller,
       readOnly: true,
@@ -35,11 +41,11 @@ class _DateSelectorState extends State<DateSelector> {
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime(2000),
-          lastDate: DateTime(2101),
+          lastDate: DateTime.now(),
         );
 
         if (pickedDate != null) {
-          String formattedDate = DateFormat('dd MMMM yyyy').format(pickedDate);
+          String formattedDate = _formatDate(pickedDate);
 
           setState(() {
             widget.controller.text = formattedDate;

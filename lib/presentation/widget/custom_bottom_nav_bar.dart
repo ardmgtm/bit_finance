@@ -133,7 +133,6 @@ class NavBarItemWidget extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
 

@@ -1,3 +1,4 @@
+import 'package:bit_finance/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -5,6 +6,7 @@ import 'application/constants/routes.dart';
 import 'application/constants/styles.dart';
 
 void main() {
+  configureDependencies();
   runApp(const MyApp());
 }
 
