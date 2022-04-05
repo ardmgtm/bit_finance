@@ -10,24 +10,27 @@ class HomeController extends GetxController {
 
   RxList<Transaction> transactions = RxList.empty();
   RxBool isError = false.obs;
+  RxBool isLoading = false.obs;
 
   HomeController(this.repository);
 
   get isEmpty => transactions.isEmpty;
 
   _error() {
-    isError = true.obs;
-    transactions = RxList.empty();
+    isError.value = true;
+    transactions.value = RxList.empty();
   }
 
   getRecentTransaction() async {
+    isLoading.value = true;
     var res = await repository.getRecentTransactions();
     res.fold(
       (items) {
-        isError = false.obs;
-        transactions = items.obs;
+        isError.value = false;
+        transactions.value = items;
       },
       (failure) => _error(),
     );
+    isLoading.value = false;
   }
 }

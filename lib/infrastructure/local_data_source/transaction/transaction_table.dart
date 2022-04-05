@@ -3,7 +3,7 @@ import '../../../domain/entity/transaction/transaction.dart';
 const transactionTableQuery = '''
 create table if not exists '$transactionTable' ( 
   $columnId integer primary key autoincrement, 
-  $columnType text not null,
+  $columnType integer not null,
   $columnNominal real not null,
   $columnDateTime text not null,
   $columnCategory integer not null,

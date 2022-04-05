@@ -3,14 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../application/constants/routes.dart';
+import '../../application/controller/home_controller.dart';
+import '../../injection.dart';
 import '../widget/widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final c = Get.put(getIt<HomeController>());
     TextTheme textTheme = Theme.of(context).textTheme;
+    c.getRecentTransaction();
 
     return Scaffold(
       appBar: AppBar(
@@ -135,52 +139,29 @@ class HomePage extends StatelessWidget {
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
-          Expanded(
-            child: ListView.separated(
-              itemCount: 3,
-              separatorBuilder: (_, i) => const SizedBox(height: 16),
-              itemBuilder: (context, i) => ListTile(
-                leading: Container(
-                  decoration: BoxDecoration(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Icon(
-                      Icons.receipt,
-                      color: Theme.of(context).colorScheme.primary,
+          Obx(
+            () => c.isLoading.value
+                ? const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.separated(
+                      itemCount: c.transactions.length,
+                      separatorBuilder: (_, i) => const SizedBox(height: 16),
+                      itemBuilder: (context, i) =>
+                          TransactionCard(transaction: c.transactions[i]),
                     ),
                   ),
-                ),
-                title: Text(
-                  "Subscription",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text("Netflix"),
-                    Text("23 Mar, 03:00"),
-                  ],
-                ),
-                trailing: Text(
-                  "- Rp 45,000",
-                  style: TextStyle(
-                      color: Colors.red[600], fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          )
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed(BitFinanceRoutes.addTransaction);
+          Get.toNamed(BitFinanceRoutes.addTransaction)?.then(
+            (value) => c.getRecentTransaction(),
+          );
         },
         elevation: 0,
         child: const Icon(Icons.add),

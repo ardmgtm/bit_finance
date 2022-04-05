@@ -22,11 +22,8 @@ class TransactionLocalDataSource {
       limit: 5,
       orderBy: '$columnDateTime DESC',
     );
-
     List<Transaction> recentTransaction =
         jsons.map((json) => Transaction.fromJson(json)).toList();
-
-    // if (products.isEmpty) throw NoDataException();
     return recentTransaction;
   }
 }
