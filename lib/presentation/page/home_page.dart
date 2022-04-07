@@ -1,20 +1,21 @@
+import 'package:bit_finance/application/helper/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../application/constants/routes.dart';
-import '../../application/controller/home_controller.dart';
+import '../../application/controller/get_transaction_controller.dart';
 import '../../injection.dart';
 import '../widget/widget.dart';
 
-class HomePage extends GetView<HomeController> {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final c = Get.put(getIt<HomeController>());
+    final c = Get.put(getIt<GetTransactionController>());
     TextTheme textTheme = Theme.of(context).textTheme;
-    c.getRecentTransaction();
+    c.getMonthlyTransaction(DateTime.now().month, DateTime.now().year);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,17 +44,19 @@ class HomePage extends GetView<HomeController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Your Balance,",
+                    "Monthly Balance,",
                     style: textTheme.bodyText1!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text(
-                    "Rp 10,350,000",
-                    style: textTheme.headline5!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  Obx(
+                    () => Text(
+                      CurrencyFormatter.format(c.balance.value),
+                      style: textTheme.headline5!.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -81,11 +84,13 @@ class HomePage extends GetView<HomeController> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(
-                                  "Rp 20,000,000",
-                                  style: textTheme.bodyText1!.copyWith(
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold,
+                                Obx(
+                                  () => Text(
+                                    CurrencyFormatter.format(c.income.value),
+                                    style: textTheme.bodyText1!.copyWith(
+                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -111,11 +116,13 @@ class HomePage extends GetView<HomeController> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(
-                                  "Rp 9,650,000",
-                                  style: textTheme.bodyText1!.copyWith(
-                                    color: Colors.grey[800],
-                                    fontWeight: FontWeight.bold,
+                                Obx(
+                                  () => Text(
+                                    CurrencyFormatter.format(c.expense.value),
+                                    style: textTheme.bodyText1!.copyWith(
+                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -146,21 +153,47 @@ class HomePage extends GetView<HomeController> {
                       child: CircularProgressIndicator(),
                     ),
                   )
-                : Expanded(
-                    child: ListView.separated(
-                      itemCount: c.transactions.length,
-                      separatorBuilder: (_, i) => const SizedBox(height: 16),
-                      itemBuilder: (context, i) =>
-                          TransactionCard(transaction: c.transactions[i]),
-                    ),
-                  ),
+                : c.recentTransactions.isEmpty
+                    ? Expanded(
+                        child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Icon(
+                                Icons.file_copy,
+                                color: Colors.grey,
+                                size: 30,
+                              ),
+                            ),
+                            Text(
+                              "Empty Transaction !",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+                    : Expanded(
+                        child: ListView.separated(
+                          itemCount: c.recentTransactions.length,
+                          separatorBuilder: (_, i) =>
+                              const SizedBox(height: 16),
+                          itemBuilder: (context, i) => TransactionCard(
+                              transaction: c.recentTransactions[i]),
+                        ),
+                      ),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(BitFinanceRoutes.addTransaction)?.then(
-            (value) => c.getRecentTransaction(),
+            (value) => c.getMonthlyTransaction(
+                DateTime.now().month, DateTime.now().year),
           );
         },
         elevation: 0,

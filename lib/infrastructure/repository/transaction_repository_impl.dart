@@ -25,10 +25,10 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<Either<List<Transaction>, TransactionFailure>>
-      getRecentTransactions() async {
+  Future<Either<List<Transaction>, TransactionFailure>> getMonthlyTransactions(
+      int month, int year) async {
     try {
-      var res = await dataSource.getRecentTransaction();
+      var res = await dataSource.getMonthlyTransaction(month, year);
       return Left(res);
     } catch (e) {
       return const Right(TransactionFailure.unexpected());

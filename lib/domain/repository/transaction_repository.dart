@@ -7,5 +7,8 @@ abstract class TransactionRepository {
   Future<Either<Transaction, TransactionFailure>> createTransaction(
     Transaction transaction,
   );
-  Future<Either<List<Transaction>, TransactionFailure>> getRecentTransactions();
+  Future<Either<List<Transaction>, TransactionFailure>> getMonthlyTransactions(
+    int month,
+    int year,
+  );
 }

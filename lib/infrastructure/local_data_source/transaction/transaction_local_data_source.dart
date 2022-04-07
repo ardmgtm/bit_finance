@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entity/transaction/transaction.dart';
@@ -5,7 +6,7 @@ import '../../core/local_db.dart';
 
 @lazySingleton
 class TransactionLocalDataSource {
-  LocalDb localDb = LocalDb.instance;
+  final LocalDb localDb = LocalDb.instance;
 
   Future<Transaction> createTransaction(Transaction transaction) async {
     var db = await localDb.database;
@@ -15,11 +16,12 @@ class TransactionLocalDataSource {
     return newTransaction;
   }
 
-  Future<List<Transaction>> getRecentTransaction() async {
+  Future<List<Transaction>> getMonthlyTransaction(int month, int year) async {
     var db = await localDb.database;
     var jsons = await db.query(
       transactionTable,
-      limit: 5,
+      where: "strftime('%Y-%m', $columnDateTime) = ?",
+      whereArgs: ['$year-${month.toString().padLeft(2, '0')}'],
       orderBy: '$columnDateTime DESC',
     );
     List<Transaction> recentTransaction =
