@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:bit_finance/domain/entity/transaction/transaction.dart';
+import 'package:bit_finance/domain/failure/transaction_failure.dart';
 import 'package:bit_finance/infrastructure/local_data_source/transaction/transaction_local_data_source.dart';
 import 'package:bit_finance/infrastructure/repository/transaction_repository_impl.dart';
 import 'package:dartz/dartz.dart';
@@ -19,7 +22,6 @@ void main() {
   });
 
   Transaction trx = Transaction(
-    id: 0,
     type: 0,
     nominal: 1000,
     dateTime: DateTime.now(),
@@ -31,12 +33,22 @@ void main() {
     'Create Transaction',
     () {
       test('Return Transaction when transaction successfull created', () async {
-        when(dataSource.createTransaction(any)).thenAnswer((_) async => trx);
+        when(dataSource.createTransaction(any))
+            .thenAnswer((_) async => trx.copyWith(id: 0));
 
         final res = await repositoryImpl.createTransaction(trx);
 
         verify(dataSource.createTransaction(trx));
-        expect(res, Left(trx));
+        expect(res, Left(trx.copyWith(id: 0)));
+      });
+      test('Return TransactionFailure when failed to create a transaction',
+          () async {
+        when(dataSource.createTransaction(any)).thenThrow((_) => Exception());
+
+        final res = await repositoryImpl.createTransaction(trx);
+
+        verify(dataSource.createTransaction(trx));
+        expect(res, const Right(TransactionFailure.unexpected()));
       });
     },
   );

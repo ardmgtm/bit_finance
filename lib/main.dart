@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           child: child ?? Container(),
         );
       },
-      initialRoute: BitFinanceRoutes.home,
+      initialRoute: BitFinanceRoutes.main,
       getPages: BitFinanceRoutes.pages(),
     );
   }

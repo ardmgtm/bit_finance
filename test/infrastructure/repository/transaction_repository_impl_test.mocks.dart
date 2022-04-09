@@ -42,12 +42,6 @@ class MockTransactionLocalDataSource extends _i1.Mock
               returnValue: Future<_i3.Transaction>.value(_FakeTransaction_1()))
           as _i5.Future<_i3.Transaction>);
   @override
-  _i5.Future<List<_i3.Transaction>> getRecentTransaction() =>
-      (super.noSuchMethod(Invocation.method(#getRecentTransaction, []),
-              returnValue:
-                  Future<List<_i3.Transaction>>.value(<_i3.Transaction>[]))
-          as _i5.Future<List<_i3.Transaction>>);
-  @override
   _i5.Future<List<_i3.Transaction>> getMonthlyTransaction(
           int? month, int? year) =>
       (super.noSuchMethod(

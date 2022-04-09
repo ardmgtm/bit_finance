@@ -18,7 +18,7 @@ class GetTransactionController extends GetxController {
 
   GetTransactionController(this.repository);
 
-  get isEmpty => recentTransactions.isEmpty;
+  get isEmpty => transactions.isEmpty;
 
   _error() {
     isError.value = true;
