@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entity/transaction/transaction.dart';

@@ -1,3 +1,5 @@
+import 'package:bit_finance/application/controller/get_transaction_controller.dart';
+import 'package:bit_finance/application/controller/main_page_controller.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,7 @@ class AddExpenseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(getIt<AddTransactionController>());
+    GetTransactionController c2 = Get.find();
 
     TextEditingController _nominalInput = TextEditingController();
     TextEditingController _dateInput = TextEditingController();
@@ -112,6 +115,10 @@ class AddExpenseScreen extends StatelessWidget {
               );
               debugPrint(transaction.toJson().toString());
               await controller.createTransaction(transaction);
+              await c2.getMonthlyTransaction(
+                DateTime.now().month,
+                DateTime.now().year,
+              );
               debugPrint(controller.isError.toString());
               if (controller.isError.isFalse) {
                 Get.back();

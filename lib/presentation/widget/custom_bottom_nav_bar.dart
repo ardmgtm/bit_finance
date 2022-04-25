@@ -2,20 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'dart:math' as math;
 
-class CustomBottomNavBar extends StatefulWidget {
+class CustomBottomNavBar extends StatelessWidget {
   final Function(int)? onItemMenuSelected;
+  final int selectedIndex;
 
   const CustomBottomNavBar({
     Key? key,
+    required this.selectedIndex,
     this.onItemMenuSelected,
   }) : super(key: key);
-
-  @override
-  State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
-}
-
-class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +31,10 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             NavBarItemWidget(
               icon: item.icon,
               label: item.label,
-              isActive: index == _selectedIndex,
+              isActive: index == selectedIndex,
               onTap: () {
-                setState(() {
-                  _selectedIndex = index;
-                });
-                if (widget.onItemMenuSelected != null) {
-                  widget.onItemMenuSelected!(index);
+                if (onItemMenuSelected != null) {
+                  onItemMenuSelected!(index);
                 }
               },
             ),
