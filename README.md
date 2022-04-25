@@ -1,8 +1,13 @@
 # Bit Finance
 
+## Description
+
+An application that can help us record financial incomes and expenses.
+
 ## Feature
 
 - Record Income and Expense
+- View monthly expenses and income
 
 ## 📸 Android Screenshot
 
