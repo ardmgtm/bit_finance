@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../../application/controller/get_transaction_controller.dart';
 import '../../../application/helper/currency_formatter.dart';
 import '../../../injection.dart';
-import '../../widget/transaction_card.dart';
+import '../../widget/widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -144,46 +144,20 @@ class HomeScreen extends StatelessWidget {
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
         ),
-        Obx(
-          () => c.isLoading.value
-              ? const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              : c.recentTransactions.isEmpty
-                  ? Expanded(
-                      child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Icon(
-                              Icons.file_copy,
-                              color: Colors.grey,
-                              size: 30,
-                            ),
-                          ),
-                          Text(
-                            "Empty Transaction !",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ))
-                  : Expanded(
-                      child: ListView.separated(
+        Expanded(
+          child: Obx(
+            () => c.isLoading.value
+                ? const LoadingWidget()
+                : c.recentTransactions.isEmpty
+                    ? const EmptyTransactionWidget()
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(0),
                         itemCount: c.recentTransactions.length,
-                        separatorBuilder: (_, i) => const SizedBox(),
                         itemBuilder: (context, i) => TransactionCard(
                           transaction: c.recentTransactions[i],
                         ),
                       ),
-                    ),
+          ),
         ),
       ],
     );

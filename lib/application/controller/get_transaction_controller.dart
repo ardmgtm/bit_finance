@@ -39,6 +39,7 @@ class GetTransactionController extends GetxController {
         income.value = items
             .where((trx) => trx.type == 1)
             .fold(0, (sum, trx) => sum + trx.nominal);
+        transactions.value = items;
         balance.value = income.value - expense.value;
       },
       (failure) => _error(),

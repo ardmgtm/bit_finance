@@ -19,20 +19,21 @@ class TransactionCard extends StatelessWidget {
         ? expenseCategories[transaction.category]
         : incomeCategories[transaction.category];
 
-    Color _color =
-        transaction.type == 0 ? Colors.red[600]! : Colors.green[600]!;
+    Color _color = transaction.type == 0
+        ? Theme.of(context).colorScheme.error
+        : Theme.of(context).colorScheme.primary;
 
     return ListTile(
       leading: Container(
         decoration: BoxDecoration(
-          color: _color.withOpacity(0.3),
+          color: _color.withOpacity(0.8),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: IconTheme(
               child: _category.icon,
-              data: IconThemeData(color: _color),
+              data: IconThemeData(color: Colors.white),
             )),
       ),
       title: Text(
@@ -54,7 +55,7 @@ class TransactionCard extends StatelessWidget {
         (transaction.type == 0 ? '-' : '+') +
             CurrencyFormatter.format(transaction.nominal),
         style: TextStyle(
-          color: transaction.type == 0 ? Colors.red[600] : Colors.green[600],
+          color: _color,
           fontWeight: FontWeight.bold,
         ),
       ),
