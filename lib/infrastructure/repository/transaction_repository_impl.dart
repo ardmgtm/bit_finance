@@ -34,4 +34,14 @@ class TransactionRepositoryImpl implements TransactionRepository {
       return const Right(TransactionFailure.unexpected());
     }
   }
+
+  @override
+  Future<DateTime> getEarliestTransactionDate() async {
+    try {
+      var date = await dataSource.getEarliestTransactionDate();
+      return date;
+    } catch (e) {
+      return DateTime.now();
+    }
+  }
 }

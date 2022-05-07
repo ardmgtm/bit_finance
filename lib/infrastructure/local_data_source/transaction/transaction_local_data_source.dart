@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entity/transaction/transaction.dart';
@@ -26,5 +27,16 @@ class TransactionLocalDataSource {
     List<Transaction> recentTransaction =
         jsons.map((json) => Transaction.fromJson(json)).toList();
     return recentTransaction;
+  }
+
+  Future<DateTime> getEarliestTransactionDate() async {
+    var db = await localDb.database;
+    var json = await db.query(
+      transactionTable,
+      orderBy: '$columnDateTime ASC',
+      limit: 1,
+    );
+    DateTime date = DateTime.parse(json[0][columnDateTime].toString());
+    return date;
   }
 }

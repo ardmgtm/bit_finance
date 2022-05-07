@@ -11,4 +11,5 @@ abstract class TransactionRepository {
     int month,
     int year,
   );
+  Future<DateTime> getEarliestTransactionDate();
 }

@@ -7,9 +7,10 @@
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/controller/add_transaction_controller.dart' as _i7;
-import 'application/controller/get_transaction_controller.dart' as _i8;
+import 'application/controller/add_transaction_controller.dart' as _i8;
+import 'application/controller/get_transaction_controller.dart' as _i9;
 import 'application/controller/main_page_controller.dart' as _i3;
+import 'application/controller/transaction_screen_controller.dart' as _i7;
 import 'domain/repository/transaction_repository.dart' as _i5;
 import 'infrastructure/local_data_source/transaction/transaction_local_data_source.dart'
     as _i4;
@@ -26,9 +27,11 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i4.TransactionLocalDataSource());
   gh.lazySingleton<_i5.TransactionRepository>(() =>
       _i6.TransactionRepositoryImpl(get<_i4.TransactionLocalDataSource>()));
-  gh.factory<_i7.AddTransactionController>(
-      () => _i7.AddTransactionController(get<_i5.TransactionRepository>()));
-  gh.factory<_i8.GetTransactionController>(
-      () => _i8.GetTransactionController(get<_i5.TransactionRepository>()));
+  gh.factory<_i7.TransactionViewController>(
+      () => _i7.TransactionViewController());
+  gh.factory<_i8.AddTransactionController>(
+      () => _i8.AddTransactionController(get<_i5.TransactionRepository>()));
+  gh.factory<_i9.GetTransactionController>(
+      () => _i9.GetTransactionController(get<_i5.TransactionRepository>()));
   return get;
 }
